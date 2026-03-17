@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Code2, 
   Rocket, 
@@ -12,12 +12,12 @@ import {
   ChevronRight,
   MessageSquare,
   Sparkles,
-  Users,
-  Layers,
-  Zap,
   CheckCircle2,
   ChevronDown,
-  Star
+  Star,
+  X,
+  Layers,
+  Zap
 } from 'lucide-react';
 import heroBg from './assets/hero-bg.png';
 import projectsData from './projects.json';
@@ -54,24 +54,11 @@ const processSteps = [
   }
 ];
 
-const testimonials = [
-  {
-    name: "Alex Rivera",
-    role: "CEO at TechFlow",
-    text: "Working with this team was a game-changer. Our conversion rate increased by 40% after the redesign.",
-    avatar: "https://i.pravatar.cc/150?u=alex"
-  },
-  {
-    name: "Sarah Chen",
-    role: "Founder of Bloom",
-    text: "The attention to detail and technical expertise is unmatched. Highly recommended!",
-    avatar: "https://i.pravatar.cc/150?u=sarah"
-  }
-];
+
 
 const faqs = [
   { q: "How long does a typical project take?", a: "Most projects take between 4-8 weeks depending on complexity." },
-  { q: "What technologies do you specialize in?", a: "We majorly use React, Next.js, Node.js, and modern CSS frameworks like Tailwind." },
+  { q: "What technologies do you specialize in?", a: "We majorly use React, Next.js, Node.js, PHP, Laravel, and modern CSS frameworks like Tailwind." },
   { q: "Do you offer post-launch support?", a: "Yes, we provide 3 months of free maintenance and support for all our projects." }
 ];
 
@@ -79,7 +66,7 @@ const services = [
   {
     icon: <Globe className="w-8 h-8 text-blue-400" />,
     title: "Web Development",
-    description: "Crafting blazing fast, SEO-friendly web applications that scale."
+    description: "Crafting blazing fast, high-performance web applications using MERN and Laravel stacks."
   },
   {
     icon: <Cpu className="w-8 h-8 text-purple-400" />,
@@ -95,20 +82,90 @@ const services = [
 
 function App() {
   const [activeFaq, setActiveFaq] = useState(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-[#0a0a0c]">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 w-full z-50 glass-card !rounded-none border-t-0 border-x-0 bg-[#0a0a0c]/80">
+      <nav className="fixed top-0 left-0 w-full z-50 glass-card !rounded-none border-t-0 border-x-0 bg-[#0a0a0c]/80 backdrop-blur-lg">
         <div className="container py-4 flex items-center justify-between">
           <div className="text-2xl font-black gradient-text">PORTFOLIO.</div>
-          <div className="hidden md:flex items-center gap-8">
+          
+          {/* Desktop Menu */}
+          <div className="hidden lg:flex items-center gap-8">
             <a href="#projects" className="text-sm font-medium text-text-muted hover:text-white transition-colors">Projects</a>
             <a href="#services" className="text-sm font-medium text-text-muted hover:text-white transition-colors">Services</a>
             <a href="#process" className="text-sm font-medium text-text-muted hover:text-white transition-colors">Process</a>
             <a href="#contact" className="btn btn-primary py-2 px-6 text-sm">Hire Me</a>
           </div>
+
+          {/* Mobile Menu Toggle */}
+          <button 
+            className="lg:hidden menu-btn z-[110]"
+            onClick={() => setIsMenuOpen(true)}
+          >
+            <div className="menu-line w-6" />
+            <div className="menu-line w-6" />
+            <div className="menu-line w-6" />
+          </button>
         </div>
+
+        {/* Mobile Menu Overlay */}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <>
+              {/* Backdrop */}
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setIsMenuOpen(false)}
+                className="nav-backdrop"
+              />
+              
+              {/* Sidebar */}
+              <motion.div 
+                initial={{ x: '100%' }}
+                animate={{ x: 0 }}
+                exit={{ x: '100%' }}
+                transition={{ type: "spring", damping: 30, stiffness: 300 }}
+                className="mobile-nav-overlay"
+              >
+                {/* Close Button Inside Sidebar */}
+                <button 
+                  className="close-btn"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <X size={24} />
+                </button>
+
+                <div className="flex flex-col gap-8 mt-10">
+                  <div className="mb-8">
+                    <div className="text-xl font-black gradient-text mb-2">PORTFOLIO.</div>
+                    <div className="h-1 w-12 bg-primary rounded-full" />
+                  </div>
+                  
+                  <a href="#projects" onClick={() => setIsMenuOpen(false)} className="hover:pl-4 transition-all hover:text-primary">
+                    Projects Case Studies
+                  </a>
+                  <a href="#services" onClick={() => setIsMenuOpen(false)} className="hover:pl-4 transition-all hover:text-primary">
+                    Services & Skills
+                  </a>
+                  <a href="#process" onClick={() => setIsMenuOpen(false)} className="hover:pl-4 transition-all hover:text-primary">
+                    How I Deliver
+                  </a>
+                  
+                  <div className="mt-10 pt-10 border-t border-white/5">
+                    <p className="text-xs uppercase tracking-widest text-text-muted mb-6">Let's Connect</p>
+                    <a href="#contact" onClick={() => setIsMenuOpen(false)} className="btn btn-primary w-full py-4">
+                      Get in Touch
+                    </a>
+                  </div>
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
       </nav>
 
       {/* Hero Section */}
@@ -198,105 +255,157 @@ function App() {
       </section>
 
       {/* Process Section */}
-      <section className="bg-[#0a0a0c] relative overflow-hidden" id="process">
-        {/* Background Glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-primary/10 blur-[120px] rounded-full pointer-events-none" />
+      <section className="bg-[#0a0a0c] py-32 relative overflow-hidden" id="process">
+        {/* Background Glows */}
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-secondary/5 blur-[120px] rounded-full pointer-events-none" />
         
         <div className="container relative z-10">
-          <div className="text-center mb-20">
+          <div className="text-center mb-24">
+            <motion.span 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              className="text-primary font-bold tracking-[0.2em] text-sm uppercase mb-4 block"
+            >
+              Workflow
+            </motion.span>
             <motion.h2 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-5xl font-black mb-6"
+              className="text-5xl md:text-7xl font-black mb-6"
             >
-              How I <span className="gradient-text">Work</span>
+              The <span className="gradient-text">Process</span>
             </motion.h2>
-            <p className="text-text-muted text-lg max-w-2xl mx-auto">
-              My proven 4-step framework for turning complex ideas into 
-              successful digital products.
+            <p className="text-text-muted text-xl max-w-2xl mx-auto font-medium">
+              A high-end, iterative framework designed for speed, 
+              quality, and scalability.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
-            {/* Desktop Connecting Line */}
-            <div className="hidden md:block absolute top-[40px] left-[10%] right-[10%] h-[2px] bg-gradient-to-r from-primary/30 via-secondary/30 to-primary/30 -z-10" />
-            
-            {processSteps.map((step, i) => (
-              <motion.div 
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="group"
-              >
-                <div className="glass-card p-8 h-full relative flex flex-col items-center text-center hover:bg-white/[0.08] transition-all border-white/5">
-                  <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center mb-8 shadow-lg shadow-primary/20 group-hover:scale-110 group-hover:rotate-6 transition-transform">
-                    <span className="text-white">
-                      {React.cloneElement(step.icon, { size: 32 })}
-                    </span>
+          <div className="relative">
+            {/* Animated Progress Line */}
+            <div className="hidden lg:block absolute top-[60px] left-0 w-full h-[1px] bg-white/5 overflow-hidden">
+               <motion.div 
+                className="w-full h-full bg-gradient-to-r from-transparent via-primary to-transparent"
+                animate={{ x: ['-100%', '100%'] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+               />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+              {processSteps.map((step, i) => (
+                <motion.div 
+                  key={i}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="relative group"
+                >
+                  {/* Step Connector Node (Desktop) */}
+                  <div className="hidden lg:flex absolute -top-[7px] left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-[#0a0a0c] border-2 border-white/10 z-20 group-hover:border-primary transition-colors">
+                    <motion.div 
+                      className="w-full h-full rounded-full bg-primary"
+                      initial={{ scale: 0 }}
+                      whileInView={{ scale: 1 }}
+                      transition={{ delay: i * 0.2 + 0.5 }}
+                    />
                   </div>
-                  
-                  <div className="absolute top-4 right-6 text-4xl font-black opacity-10 group-hover:opacity-30 transition-opacity">
-                    0{i + 1}
+
+                  <div className="text-center">
+                    <div className="inline-flex items-center justify-center w-28 h-28 rounded-3xl bg-white/[0.02] border border-white/5 mb-10 group-hover:bg-primary/5 group-hover:border-primary/20 transition-all duration-500 relative overflow-hidden">
+                      {/* Animated Border */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                      
+                      <div className="relative z-10 text-white group-hover:scale-110 transition-transform duration-500">
+                        {React.cloneElement(step.icon, { size: 40, strokeWidth: 1.5 })}
+                      </div>
+                    </div>
+
+                    <div className="mb-4">
+                      <span className="text-[10px] uppercase tracking-[0.3em] text-primary font-bold mb-2 block opacity-50">Step 0{i + 1}</span>
+                      <h3 className="text-2xl font-bold text-white group-hover:gradient-text transition-all">{step.title}</h3>
+                    </div>
+                    
+                    <p className="text-text-muted text-sm leading-relaxed max-w-[250px] mx-auto">
+                      {step.desc}
+                    </p>
                   </div>
-                  
-                  <h3 className="text-2xl font-bold mb-4">{step.title}</h3>
-                  <p className="text-text-muted text-sm leading-relaxed">
-                    {step.desc}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* Projects Section */}
-      <section className="bg-[#121216]/50" id="projects">
+      <section className="bg-[#0a0a0c] py-24" id="projects">
         <div className="container">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-            <div>
-              <h2 className="text-4xl font-bold mb-4">Selected Works</h2>
-              <p className="text-text-muted">A showcase of recent digital products I've built.</p>
+          <div className="flex flex-col md:flex-row items-center justify-between mb-20 gap-8">
+            <div className="text-center md:text-left">
+              <span className="text-primary font-bold tracking-widest text-sm uppercase mb-4 block">Portfolio</span>
+              <h2 className="text-5xl md:text-6xl font-black mb-6">Expertise in <br /><span className="gradient-text">Real-World Projects</span></h2>
+              <p className="text-text-muted text-lg max-w-xl">
+                A selection of high-performance applications built with industry-standard 
+                architectures and modern technology stacks.
+              </p>
             </div>
-            <a href="#" className="flex items-center gap-2 text-primary hover:text-secondary transition-colors font-semibold">
-              View All Projects <ExternalLink size={18} />
+            <a href="#" className="btn btn-outline group">
+              View All Work <ExternalLink size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
             </a>
           </div>
 
-          <div className="grid">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {projects.map((project, index) => (
               <motion.div 
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.2 }}
-                className="glass-card overflow-hidden group"
+                transition={{ delay: index * 0.1, duration: 0.6 }}
+                className="project-card group"
               >
-                <div className="relative aspect-video overflow-hidden">
+                <div className="project-image-wrapper">
                   <img 
                     src={project.image} 
                     alt={project.title}
-                    className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-                </div>
-                <div className="p-8">
-                  <h3 className="text-2xl font-bold mb-3">{project.title}</h3>
-                  <p className="text-text-muted mb-6">{project.description}</p>
-                  <div className="flex flex-wrap gap-2 mb-8">
-                    {project.tech.map((t, i) => (
-                      <span key={i} className="px-3 py-1 rounded-full bg-white/5 text-xs text-text-muted border border-white/10">
-                        {t}
-                      </span>
-                    ))}
+                  <div className="project-overlay" />
+                  <div className="absolute top-6 left-6 z-20">
+                    <div className="flex flex-wrap gap-2">
+                      {project.tech.slice(0, 2).map((t, i) => (
+                        <span key={i} className="tag !bg-white/10 !text-white !border-white/20 backdrop-blur-md">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                  <a href={project.link} className="flex items-center gap-2 font-bold hover:text-primary transition-colors">
-                    View Project <ExternalLink size={18} />
-                  </a>
+                </div>
+                
+                <div className="project-content">
+                  <h3 className="text-2xl font-bold mb-3 group-hover:text-primary transition-colors">
+                    {project.title}
+                  </h3>
+                  <p className="text-text-muted mb-8 line-clamp-2 text-sm leading-relaxed">
+                    {project.description}
+                  </p>
+                  
+                  <div className="flex items-center justify-between">
+                    <div className="flex gap-2">
+                       {project.tech.slice(2).map((t, i) => (
+                        <span key={i} className="text-[10px] text-text-muted uppercase tracking-tighter border border-white/5 px-2 py-1 rounded">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                    <a 
+                      href={project.link} 
+                      className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-primary hover:border-primary transition-all group/link"
+                    >
+                      <ExternalLink size={16} className="group-hover/link:scale-110" />
+                    </a>
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -304,30 +413,7 @@ function App() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="container">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4">Client Feedback</h2>
-          <p className="text-text-muted">What people say about my work</p>
-        </div>
-        <div className="grid">
-          {testimonials.map((t, i) => (
-            <div key={i} className="glass-card p-8">
-              <div className="flex gap-1 mb-6">
-                {[...Array(5)].map((_, i) => <Star key={i} size={16} className="fill-yellow-400 text-yellow-400" />)}
-              </div>
-              <p className="text-lg italic mb-8">"{t.text}"</p>
-              <div className="flex items-center gap-4">
-                <img src={t.avatar} className="w-12 h-12 rounded-full border-2 border-primary" alt={t.name} />
-                <div>
-                  <div className="font-bold">{t.name}</div>
-                  <div className="text-sm text-text-muted">{t.role}</div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+
 
       {/* FAQ Section */}
       <section className="bg-[#121216]/50">
@@ -357,26 +443,26 @@ function App() {
         </div>
       </section>
 
-      {/* Call to Action */}
-      <section id="contact" className="container text-center">
-        <div className="glass-card p-16 relative overflow-hidden">
+      <section id="contact" className="container py-12">
+        <div className="glass-card p-8 md:p-16 relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-secondary to-primary" />
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            className="text-center"
           >
-            <h2 className="text-5xl font-bold mb-8">Have a vision? Let's <br /><span className="gradient-text">scale it together.</span></h2>
-            <p className="text-xl text-text-muted max-w-xl mx-auto mb-10">
+            <h2 className="text-4xl md:text-6xl font-black mb-8 leading-tight">Have a vision? Let's <br /><span className="gradient-text">scale it together.</span></h2>
+            <p className="text-lg md:text-xl text-text-muted max-w-2xl mx-auto mb-12">
               I bring elite industry standards to every freelance project. 
               Let’s discuss how I can help your startup or business excel.
             </p>
-            <div className="flex flex-wrap justify-center gap-6">
-              <a href="mailto:hello@example.com" className="btn btn-primary btn-lg py-5 px-12 text-lg">
-                Send Project Inquiry <Mail size={24} />
+            <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
+              <a href="mailto:hello@example.com" className="btn btn-primary w-full md:w-auto py-5 px-10 text-lg flex items-center justify-center gap-3 shadow-lg shadow-primary/20">
+                Send Project Inquiry <Mail size={22} />
               </a>
-              <a href="https://wa.me/yournumber" className="btn btn-outline btn-lg py-5 px-12 text-lg">
-                Direct WhatsApp <MessageSquare size={24} />
+              <a href="https://wa.me/919625613008" target="_blank" rel="noopener noreferrer" className="btn btn-outline w-full md:w-auto py-5 px-10 text-lg flex items-center justify-center gap-3">
+                Direct WhatsApp <MessageSquare size={22} />
               </a>
             </div>
           </motion.div>
