@@ -1,23 +1,30 @@
 [
   {
-    "title": "Modern CRM Dashboard",
-    "description": "A comprehensive customer relationship management tool with real-time data visualization.",
-    "tech": ["React", "Chart.js", "Firebase"],
-    "link": "https://example.com/crm",
+    "title": "Enterprise Dynamics CRM",
+    "description": "A high-performance CRM built with Laravel & React for handling 50k+ daily transactions with real-time analytics.",
+    "tech": ["Laravel", "React", "MySQL", "Pusher"],
+    "link": "#",
+    "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1000"
+  },
+  {
+    "title": "Global Market Ecommerce",
+    "description": "A full-scale ecommerce engine with automated payments, inventory management, and multi-vendor support.",
+    "tech": ["Next.js", "Node.js", "Stripe", "MongoDB"],
+    "link": "#",
+    "image": "https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&q=80&w=1080"
+  },
+  {
+    "title": "ProConnect CRM System",
+    "description": "Bespoke customer management solution for service agencies featuring lead tracking and automated billing.",
+    "tech": ["PHP", "Laravel", "MySQL", "Redis"],
+    "link": "#",
     "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1000"
   },
   {
-    "title": "E-Learning Platform",
-    "description": "Interactive online learning system with progress tracking and video lectures.",
-    "tech": ["Next.js", "TailwindCSS", "Prisma"],
-    "link": "https://example.com/edu",
-    "image": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=1080"
-  },
-  {
-    "title": "FinTech Mobile App",
-    "description": "Secure and intuitive mobile application for personal finance and budgeting.",
-    "tech": ["React Native", "Redux", "Node.js"],
-    "link": "https://example.com/finance",
-    "image": "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=1000"
+    "title": "Artisanal Goods E-Shop",
+    "description": "Creative ecommerce platform with a focus on immersive UX and smooth mobile shopping experience.",
+    "tech": ["React", "Firebase", "Tailwind", "Cloudinary"],
+    "link": "#",
+    "image": "https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&q=80&w=1080"
   }
 ]

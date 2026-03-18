@@ -25,10 +25,24 @@ import projectsData from './projects.json';
 const projects = projectsData;
 
 const stats = [
-  { label: "Years of Industry Exp", value: "5+", icon: <Layers className="text-blue-400" /> },
-  { label: "Production Scale Apps", value: "20+", icon: <Rocket className="text-emerald-400" /> },
-  { label: "Performance Score", value: "98%", icon: <Zap className="text-yellow-400" /> },
-  { label: "Clean Code Standard", value: "100%", icon: <CheckCircle2 className="text-purple-400" /> }
+  { label: "Successful Projects", value: "14+", icon: <Rocket className="text-emerald-400" /> },
+  { label: "Ecommerce & CRMs", value: "4", icon: <Layers className="text-blue-400" /> },
+  { label: "Client Portfolios", value: "10", icon: <Globe className="text-purple-400" /> },
+  { label: "Clean Code Standard", value: "100%", icon: <CheckCircle2 className="text-emerald-400" /> }
+];
+
+const technologies = [
+  { name: "React", icon: "https://cdn.simpleicons.org/react/61DAFB" },
+  { name: "Next.js", icon: "https://cdn.simpleicons.org/nextdotjs/white" },
+  { name: "Node.js", icon: "https://cdn.simpleicons.org/nodedotjs/339933" },
+  { name: "PHP", icon: "https://cdn.simpleicons.org/php/777BB4" },
+  { name: "Laravel", icon: "https://cdn.simpleicons.org/laravel/FF2D20" },
+  { name: "Firebase", icon: "https://cdn.simpleicons.org/firebase/FFCA28" },
+  { name: "MySQL", icon: "https://cdn.simpleicons.org/mysql/4479A1" },
+  { name: "MongoDB", icon: "https://cdn.simpleicons.org/mongodb/47A248" },
+  { name: "JavaScript", icon: "https://cdn.simpleicons.org/javascript/F7DF1E" },
+  { name: "HTML5", icon: "https://cdn.simpleicons.org/html5/E34F26" },
+  { name: "CSS3", icon: "https://cdn.simpleicons.org/css3/1572B6" }
 ];
 
 const processSteps = [
@@ -65,18 +79,34 @@ const faqs = [
 const services = [
   {
     icon: <Globe className="w-8 h-8 text-blue-400" />,
-    title: "Web Development",
-    description: "Crafting blazing fast, high-performance web applications using MERN and Laravel stacks."
+    title: "MERN Stack Dev",
+    description: "Building scalable web apps using React, Node.js, and MongoDB for modern businesses.",
+    tech: [
+      { name: "React", icon: "https://cdn.simpleicons.org/react/61DAFB" },
+      { name: "Node.js", icon: "https://cdn.simpleicons.org/nodedotjs/339933" },
+      { name: "Express", icon: "https://cdn.simpleicons.org/express/white" },
+      { name: "MongoDB", icon: "https://cdn.simpleicons.org/mongodb/47A248" }
+    ]
   },
   {
     icon: <Cpu className="w-8 h-8 text-purple-400" />,
-    title: "UI/UX Design",
-    description: "Designing intuitive and stunning user interfaces that convert."
+    title: "Laravel Mastery",
+    description: "Elite backend development and robust CRM systems with PHP and Laravel.",
+    tech: [
+      { name: "PHP", icon: "https://cdn.simpleicons.org/php/777BB4" },
+      { name: "Laravel", icon: "https://cdn.simpleicons.org/laravel/FF2D20" },
+      { name: "MySQL", icon: "https://cdn.simpleicons.org/mysql/4479A1" }
+    ]
   },
   {
     icon: <Rocket className="w-8 h-8 text-teal-400" />,
-    title: "App Strategy",
-    description: "From concept to deployment, I help build successful digital products."
+    title: "Ecommerce & Beyond",
+    description: "End-to-end ecommerce solutions with secure payments and inventory management.",
+    tech: [
+      { name: "Next.js", icon: "https://cdn.simpleicons.org/nextdotjs/white" },
+      { name: "Firebase", icon: "https://cdn.simpleicons.org/firebase/FFCA28" },
+      { name: "Stripe", icon: "https://cdn.simpleicons.org/stripe/635BFF" }
+    ]
   }
 ];
 
@@ -183,7 +213,7 @@ function App() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary-glow bg-primary/10 text-primary-glow font-medium text-sm mb-6">
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary-glow bg-primary/10 text-primary-glow font-medium text-sm mb-6 animate-float">
               <Code2 size={16} /> Senior Software Engineer & Consultant
             </span>
             <h1 className="text-6xl md:text-8xl font-black mb-6 tracking-tight">
@@ -191,8 +221,9 @@ function App() {
               <span className="gradient-text">Freelance Solutions</span>
             </h1>
             <p className="text-xl text-text-muted max-w-2xl mx-auto mb-10 leading-relaxed">
-              Leveraging my experience in high-scale corporate environments to build 
-              stunning, high-performance digital products for your business.
+              Expert developer with a proven track record: <strong>2 Ecommerce</strong> platforms, 
+              <strong> 2 Enterprise CRMs</strong>, and <strong>10+ Professional Portfolios</strong>. 
+              Delivering high-performance digital products for your business.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">
               <a href="#projects" className="btn btn-primary">
@@ -217,13 +248,85 @@ function App() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="text-center"
+                className="text-center p-6 glass-card border-none hover:bg-white/5"
               >
                 <div className="flex justify-center mb-4">{stat.icon}</div>
                 <div className="text-4xl font-bold mb-2">{stat.value}</div>
-                <div className="text-text-muted text-sm uppercase tracking-widest">{stat.label}</div>
+                <div className="text-text-muted text-[10px] uppercase tracking-widest font-bold">{stat.label}</div>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Trust & Experience Branding */}
+      <section className="py-32 bg-[#050505] relative overflow-hidden">
+        {/* Decorative Grid Pattern */}
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
+             style={{ backgroundImage: `radial-gradient(var(--primary) 1px, transparent 1px)`, backgroundSize: '40px 40px' }} />
+        
+        <div className="container relative z-10">
+          <div className="glass-card p-12 md:p-24 text-center border-white/5 bg-white/[0.01]">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="inline-block px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-bold uppercase tracking-[0.3em] mb-8">
+                Enterprise Expertise
+              </div>
+              <h2 className="text-5xl md:text-7xl font-black mb-10 leading-tight">
+                Architecting <span className="gradient-text">Trustworthy</span> <br aria-hidden="true" className="hidden md:block"/> 
+                Digital Ecosystems
+              </h2>
+              <p className="text-xl text-text-muted max-w-4xl mx-auto mb-16 leading-relaxed font-medium">
+                I don’t just build websites; I deliver <strong className="text-white">business growth systems</strong>. 
+                From complex <strong>Ecommerce engines</strong> to high-security <strong>CRMs</strong>, 
+                my work is built for scale, performance, and unmatched security.
+              </p>
+              
+              <div className="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-11 gap-8 md:gap-4">
+                {technologies.map((tech, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    whileHover={{ y: -8, scale: 1.15 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.05 }}
+                    className="flex flex-col items-center gap-4 group cursor-pointer"
+                  >
+                    <div className="w-16 h-16 rounded-2xl bg-white/[0.03] border border-white/10 flex items-center justify-center group-hover:bg-white/[0.08] group-hover:border-primary/50 transition-all duration-500 shadow-xl group-hover:shadow-primary/20">
+                      <img 
+                        src={tech.icon} 
+                        alt={tech.name} 
+                        className="w-8 h-8 object-contain filter grayscale group-hover:grayscale-0 transition-all duration-500"
+                        onError={(e) => { e.target.style.display = 'none'; }}
+                      />
+                    </div>
+                    <span className="text-[10px] font-bold text-text-muted uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+                      {tech.name}
+                    </span>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Added Trust Badges Block */}
+              <div className="mt-20 pt-16 border-t border-white/5 grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div className="text-left md:text-center px-4">
+                    <h4 className="text-primary font-black text-3xl mb-2">100%</h4>
+                    <p className="text-text-muted text-xs uppercase tracking-widest font-bold">Secure Infrastructure</p>
+                </div>
+                <div className="text-left md:text-center px-4">
+                    <h4 className="text-secondary font-black text-3xl mb-2">24/7</h4>
+                    <p className="text-text-muted text-xs uppercase tracking-widest font-bold">Priority Support</p>
+                </div>
+                <div className="text-left md:text-center px-4">
+                    <h4 className="text-accent font-black text-3xl mb-2">Unlimited</h4>
+                    <p className="text-text-muted text-xs uppercase tracking-widest font-bold">Scalability Potential</p>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -248,7 +351,22 @@ function App() {
                 {service.icon}
               </div>
               <h3 className="text-2xl font-bold mb-4">{service.title}</h3>
-              <p className="text-text-muted">{service.description}</p>
+              <p className="text-text-muted mb-8 text-sm leading-relaxed">{service.description}</p>
+              <div className="flex flex-wrap gap-2">
+                {service.tech.map((t, i) => (
+                  <div key={i} className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/[0.03] border border-white/10 hover:border-primary/30 transition-all group/tag overflow-hidden">
+                    <img 
+                      src={t.icon} 
+                      alt={t.name} 
+                      style={{ width: '16px', height: '16px' }}
+                      className="object-contain opacity-60 group-hover/tag:opacity-100 transition-opacity" 
+                    />
+                    <span className="text-[9px] uppercase font-black tracking-widest text-text-muted group-hover/tag:text-primary transition-colors whitespace-nowrap">
+                      {t.name}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </motion.div>
           ))}
         </div>
